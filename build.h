@@ -53,7 +53,10 @@ class Build_s
 	{
 	 public:
 	 int get_ss(Main_chain,Read_res);
+	 int get_cs(Res_rtm);
 	 int resnum;
+	 int *rtmn;
 	 string *res_t;
 	 Structure_s *ss;
+	 COOR_s **cs;
 	};

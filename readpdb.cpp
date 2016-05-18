@@ -328,6 +328,10 @@ int Res_rtm::get_rtm(ifstream *file)
 		}
 
 	}
+
+ for(i=0;i<rtn;i++)
+ if(rtmrt[i]=="HIS")
+	rtmrt[i]="HSD";
 }
 
 int Main_chain::get_mc(ifstream *fp1)

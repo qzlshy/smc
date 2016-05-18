@@ -26,5 +26,11 @@ int main(int argc,char **argv)
  cter.readtopter(&iftop,"CTER");
  prm.get_prm(&ifprm);
 
+ Build_m b_m;
+ b_m.build(pdb_m,top);
+ Build_s b_s;
+ b_s.get_ss(pdb_m,res);
+ b_s.get_cs(r_t);
+
 }
 

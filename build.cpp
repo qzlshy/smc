@@ -121,3 +121,43 @@ int Build_s::get_ss(Main_chain m_c,Read_res r_r)
 	 break;
 	}
 }
+
+int Build_s::get_cs(Res_rtm rt)
+{
+ int i,j,k1,k2,k3;
+ rtmn=new int[resnum];
+ cs=new COOR_s*[resnum];
+ for(i=0;i<resnum;i++)
+	{
+	 for(j=0;j<rt.rtn;j++)
+	 if(res_t[i]==rt.rtmrt[j])
+		{
+		 rtmn[i]=rt.rtmn[j];
+		 cs[i]=new COOR_s[rtmn[i]];
+		 for(k1=0;k1<rtmn[i];k1++)
+			{
+			 cs[i][k1].x=new double[ss[i].atomn];
+			 cs[i][k1].y=new double[ss[i].atomn];
+			 cs[i][k1].z=new double[ss[i].atomn];
+			 for(k2=0;k2<ss[i].atomn;k2++)
+			 for(k3=0;k3<rt.rtmcr[j][k1].n;k3++)
+			 if(ss[i].atomt[k2]==rt.rtmcr[j][k1].atomt[k3])
+				{
+				 cs[i][k1].x[k2]=rt.rtmcr[j][k1].x[k3];
+				 cs[i][k1].y[k2]=rt.rtmcr[j][k1].y[k3];
+				 cs[i][k1].z[k2]=rt.rtmcr[j][k1].z[k3];
+				 break;
+				}
+			 for(k2=0;k2<3;k2++)
+				cs[i][k1].N[k2]=rt.rtmcr[j][k1].N[k2];
+			 for(k2=0;k2<3;k2++)
+				cs[i][k1].CA[k2]=rt.rtmcr[j][k1].CA[k2];
+			 for(k2=0;k2<3;k2++)
+				cs[i][k1].C[k2]=rt.rtmcr[j][k1].C[k2];
+			 for(k2=0;k2<3;k2++)
+				cs[i][k1].CB[k2]=rt.rtmcr[j][k1].CB[k2];
+			}
+		 break;
+		}
+	}
+}
