@@ -9,13 +9,6 @@
 
 using namespace std;
 
-struct COOR_m
-	{
-	 int atomn;
-	 double *x,*y,*z;
-	 double **N,**CA,**C,**CB;
-	};
-
 class Build_m
 	{
 	 public:
@@ -32,10 +25,20 @@ class Build_m
 	 double **N,**CA,**C,**CB;
 	};
 
+struct COOR_m
+	{
+	 public:
+	 int init_cm(Build_m &);
+	 int atomn,resnum;
+	 double *x,*y,*z;
+	 double **N,**CA,**C,**CB;
+	};
+
 class COOR_s
 	{
 	 public:
 	 int atomn;
+	 int operator=(COOR_s &);
 	 double *x,*y,*z;
 	 double *N,*CA,*C,*CB;
 	};
@@ -66,3 +69,10 @@ class Build_s
 	 COOR_s **cs;
 	};
 
+class Cpy_s
+	{
+	 public:
+	 int resnum;
+	 COOR_s *cs;
+	 int init_cs(Build_s &);
+	};

@@ -33,5 +33,14 @@ int main(int argc,char **argv)
  Build_s b_s;
  b_s.build(b_m,res,r_t);
 
+ COOR_m *c_m;
+ c_m=new COOR_m[m];
+ for(i=0;i<m;i++)
+	c_m[i].init_cm(b_m);
+
+ Cpy_s *cy_s;
+ cy_s=new Cpy_s[m];
+ for(i=0;i<m;i++)
+        cy_s[i].init_cs(b_s);
 }
 

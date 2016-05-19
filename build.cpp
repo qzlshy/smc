@@ -88,6 +88,60 @@ int Build_m::build(Main_chain m_c,Topprm *top)
  guess_CB_miss(top);
 }
 
+int COOR_m::init_cm(Build_m &b_m)
+{
+ int i,j;
+ atomn=b_m.atomn;
+ resnum=b_m.resnum;
+ x=new double[atomn];
+ y=new double[atomn];
+ z=new double[atomn];
+ N=new double*[resnum];
+ CA=new double*[resnum];
+ C=new double*[resnum];
+ CB=new double*[resnum];
+ for(i=0;i<resnum;i++)
+	{
+	 N[i]=new double[3];
+	 CA[i]=new double[3];
+	 C[i]=new double[3];
+	 CB[i]=new double[3];
+	}
+ for(i=0;i<atomn;i++)
+	{
+	 x[i]=b_m.x[i];
+	 y[i]=b_m.y[i];
+	 z[i]=b_m.z[i];
+	}
+ for(i=0;i<resnum;i++)
+ for(j=0;j<3;j++)
+	{
+	 N[i][j]=b_m.N[i][j];
+	 CA[i][j]=b_m.CA[i][j];
+	 C[i][j]=b_m.C[i][j];
+	 CB[i][j]=b_m.CB[i][j];
+	}
+}
+
+int COOR_s::operator=(COOR_s &c2)
+{
+ int i;
+ atomn=c2.atomn;
+ for(i=0;i<atomn;i++)
+	{
+	 x[i]=c2.x[i];
+	 y[i]=c2.y[i];
+	 z[i]=c2.z[i];
+	}
+ for(i=0;i<3;i++)
+	{
+	 N[i]=c2.N[i];
+	 CA[i]=c2.CA[i];
+	 C[i]=c2.C[i];
+	 CB[i]=c2.CB[i];
+	}
+}
+
 int Build_s::get_ss(Build_m m_c,Read_res r_r)
 {
  int i,j,k,l;
@@ -251,4 +305,22 @@ int Build_s::build(Build_m m_c,Read_res r_r,Res_rtm rt)
  get_ss(m_c,r_r);
  get_cs(rt);
  rt_fit(m_c);
+}
+
+int Cpy_s::init_cs(Build_s &b_s)
+{
+ int i,n;
+ n=b_s.resnum;
+ cs=new COOR_s[n];
+ for(i=0;i<n;i++)
+	{
+	 cs[i].atomn=b_s.ss[i].atomn;
+	 cs[i].x=new double[cs[i].atomn];
+	 cs[i].y=new double[cs[i].atomn];
+	 cs[i].z=new double[cs[i].atomn];
+	 cs[i].N=new double[3];
+	 cs[i].CA=new double[3];
+	 cs[i].C=new double[3];
+	 cs[i].CB=new double[3];
+	}
 }
