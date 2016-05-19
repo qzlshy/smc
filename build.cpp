@@ -88,7 +88,7 @@ int Build_m::build(Main_chain m_c,Topprm *top)
  guess_CB_miss(top);
 }
 
-int Build_s::get_ss(Main_chain m_c,Read_res r_r)
+int Build_s::get_ss(Build_m m_c,Read_res r_r)
 {
  int i,j,k,l;
  resnum=m_c.resnum;
@@ -139,6 +139,7 @@ int Build_s::get_cs(Res_rtm rt)
 			 cs[i][k1].x=new double[ss[i].atomn];
 			 cs[i][k1].y=new double[ss[i].atomn];
 			 cs[i][k1].z=new double[ss[i].atomn];
+			 cs[i][k1].atomn=ss[i].atomn;
 			 for(k2=0;k2<ss[i].atomn;k2++)
 			 for(k3=0;k3<rt.rtmcr[j][k1].n;k3++)
 			 if(ss[i].atomt[k2]==rt.rtmcr[j][k1].atomt[k3])
@@ -160,4 +161,90 @@ int Build_s::get_cs(Res_rtm rt)
 		 break;
 		}
 	}
+}
+
+int Build_s::rt_fit(Build_m m_c)
+{
+ int i,j,k;
+ 
+ for(i=0;i<resnum;i++)
+ for(j=0;j<rtmn[i];j++)
+	{
+	 if(cs[i][j].atomn>0)
+	 fit_one(m_c,i,j);
+	}
+}
+
+int Build_s::fit_one(Build_m m_c,int n1,int n2)
+{
+ int i,j,k;
+ double theta;
+ double m_v1,m_b1;
+ double a1[3],b1[3],a2[3],b2[3],v1[3];
+ double CA_t[3];
+
+ for(i=0;i<3;i++)
+	CA_t[i]=cs[n1][n2].CA[i];
+ for(i=0;i<cs[n1][n2].atomn;i++)
+	{
+	 cs[n1][n2].x[i]-=CA_t[0];
+	 cs[n1][n2].y[i]-=CA_t[1];
+	 cs[n1][n2].z[i]-=CA_t[2];
+	}
+ for(i=0;i<3;i++)
+	{
+	 cs[n1][n2].N[i]-=CA_t[i];
+	 cs[n1][n2].CA[i]-=CA_t[i];
+	 cs[n1][n2].C[i]-=CA_t[i];
+	 cs[n1][n2].CB[i]-=CA_t[i];
+	}
+ for(i=0;i<3;i++)
+	{a1[i]=m_c.CB[n1][i]-m_c.CA[n1][i];
+	 b1[i]=cs[n1][n2].CB[i]-cs[n1][n2].CA[i];
+	}
+ theta=get_angle(a1[0],a1[1],a1[2],b1[0],b1[1],b1[2]);
+ L_CHAX(b1[0],b1[1],b1[2],a1[0],a1[1],a1[2],v1[0],v1[1],v1[2]);
+ L_MO(v1[0],v1[1],v1[2],m_v1);
+ v1[0]=v1[0]/m_v1; v1[1]=v1[1]/m_v1; v1[2]=v1[2]/m_v1;
+ rotation_a(cs[n1][n2].x,cs[n1][n2].y,cs[n1][n2].z,cs[n1][n2].atomn,v1,theta);
+ rotation(cs[n1][n2].N,v1,theta);
+ rotation(cs[n1][n2].C,v1,theta);
+ rotation(cs[n1][n2].CB,v1,theta);
+
+
+ for(i=0;i<3;i++)
+	{
+	 b1[i]=cs[n1][n2].CB[i]-cs[n1][n2].CA[i];
+	 a2[i]=m_c.CA[n1][i]-m_c.N[n1][i];
+	 b2[i]=cs[n1][n2].N[i]-cs[n1][n2].CA[i];
+	}
+ theta=get_dhd(a2,b1,b2);
+ L_MO(b1[0],b1[1],b1[2],m_b1);
+ b1[0]=b1[0]/m_b1; b1[1]=b1[1]/m_b1; b1[2]=b1[2]/m_b1;
+
+ rotation_a(cs[n1][n2].x,cs[n1][n2].y,cs[n1][n2].z,cs[n1][n2].atomn,b1,-theta);
+ rotation(cs[n1][n2].N,b1,-theta);
+ rotation(cs[n1][n2].C,b1,-theta);
+ rotation(cs[n1][n2].CB,b1,-theta);
+
+ for(i=0;i<cs[n1][n2].atomn;i++)
+	{
+	 cs[n1][n2].x[i]+=m_c.CA[n1][0];
+	 cs[n1][n2].y[i]+=m_c.CA[n1][1];
+	 cs[n1][n2].z[i]+=m_c.CA[n1][2];
+	}
+ for(i=0;i<3;i++)
+	{
+	 cs[n1][n2].N[i]+=m_c.CA[n1][i];
+	 cs[n1][n2].CA[i]+=m_c.CA[n1][i];
+	 cs[n1][n2].C[i]+=m_c.CA[n1][i];
+	 cs[n1][n2].CB[i]+=m_c.CA[n1][i];
+	}
+}
+
+int Build_s::build(Build_m m_c,Read_res r_r,Res_rtm rt)
+{
+ get_ss(m_c,r_r);
+ get_cs(rt);
+ rt_fit(m_c);
 }

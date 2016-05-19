@@ -11,6 +11,7 @@ using namespace std;
 
 struct COOR_m
 	{
+	 int atomn;
 	 double *x,*y,*z;
 	 double **N,**CA,**C,**CB;
 	};
@@ -34,6 +35,7 @@ class Build_m
 class COOR_s
 	{
 	 public:
+	 int atomn;
 	 double *x,*y,*z;
 	 double N[3],CA[3],C[3],CB[3];
 	};
@@ -52,8 +54,11 @@ class Structure_s
 class Build_s
 	{
 	 public:
-	 int get_ss(Main_chain,Read_res);
+	 int build(Build_m,Read_res,Res_rtm);
+	 int get_ss(Build_m,Read_res);
 	 int get_cs(Res_rtm);
+	 int rt_fit(Build_m);
+	 int fit_one(Build_m,int,int);
 	 int resnum;
 	 int *rtmn;
 	 string *res_t;
