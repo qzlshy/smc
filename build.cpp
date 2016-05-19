@@ -149,6 +149,10 @@ int Build_s::get_cs(Res_rtm rt)
 				 cs[i][k1].z[k2]=rt.rtmcr[j][k1].z[k3];
 				 break;
 				}
+			 cs[i][k1].N=new double[3];
+			 cs[i][k1].CA=new double[3];
+			 cs[i][k1].C=new double[3];
+			 cs[i][k1].CB=new double[3];
 			 for(k2=0;k2<3;k2++)
 				cs[i][k1].N[k2]=rt.rtmcr[j][k1].N[k2];
 			 for(k2=0;k2<3;k2++)

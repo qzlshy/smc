@@ -37,7 +37,7 @@ class COOR_s
 	 public:
 	 int atomn;
 	 double *x,*y,*z;
-	 double N[3],CA[3],C[3],CB[3];
+	 double *N,*CA,*C,*CB;
 	};
 
 class Structure_s
@@ -65,3 +65,4 @@ class Build_s
 	 Structure_s *ss;
 	 COOR_s **cs;
 	};
+

@@ -2,7 +2,7 @@
 
 int main(int argc,char **argv)
 {
- int i,j,k,resnum;
+ int i,j,k,resnum,m;
  Res_rtm r_t;
  Main_chain pdb_m;
  Read_res res;
@@ -15,6 +15,7 @@ int main(int argc,char **argv)
  ifstream ifres(conf.getstr("res").c_str());
  ifstream iftop(conf.getstr("top").c_str());
  ifstream ifprm(conf.getstr("prm").c_str());
+ m=conf.getint("copy");
 
  r_t.get_rtm(&ifrt);
  resnum=pdb_m.get_mc(&ifmc);
