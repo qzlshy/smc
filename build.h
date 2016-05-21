@@ -32,6 +32,7 @@ struct COOR_m
 	 int atomn,resnum;
 	 double *x,*y,*z;
 	 double **N,**CA,**C,**CB;
+	 double *cx,*cy,*cz,*mr;
 	};
 
 class COOR_s
@@ -41,6 +42,7 @@ class COOR_s
 	 int operator=(COOR_s &);
 	 double *x,*y,*z;
 	 double *N,*CA,*C,*CB;
+	 double cx,cy,cz,mr;
 	};
 
 class Structure_s
@@ -62,6 +64,7 @@ class Build_s
 	 int get_cs(Res_rtm);
 	 int rt_fit(Build_m);
 	 int fit_one(Build_m,int,int);
+	 int get_ct(int,int);
 	 int resnum;
 	 int *rtmn;
 	 string *res_t;
@@ -73,6 +76,7 @@ class Cpy_s
 	{
 	 public:
 	 int resnum;
+	 int ipk;
 	 COOR_s *cs;
 	 int init_cs(Build_s &);
 	};

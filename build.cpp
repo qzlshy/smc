@@ -90,7 +90,8 @@ int Build_m::build(Main_chain m_c,Topprm *top)
 
 int COOR_m::init_cm(Build_m &b_m)
 {
- int i,j;
+ int i,j,k;
+ double tx,ty,tz,tr,trm;
  atomn=b_m.atomn;
  resnum=b_m.resnum;
  x=new double[atomn];
@@ -107,6 +108,10 @@ int COOR_m::init_cm(Build_m &b_m)
 	 C[i]=new double[3];
 	 CB[i]=new double[3];
 	}
+ cx=new double[resnum];
+ cy=new double[resnum];
+ cz=new double[resnum];
+ mr=new double[resnum];
  for(i=0;i<atomn;i++)
 	{
 	 x[i]=b_m.x[i];
@@ -120,6 +125,30 @@ int COOR_m::init_cm(Build_m &b_m)
 	 CA[i][j]=b_m.CA[i][j];
 	 C[i][j]=b_m.C[i][j];
 	 CB[i][j]=b_m.CB[i][j];
+	}
+ for(i=0;i<resnum;i++)
+	{k=0;
+	 tx=0.0; ty=0.0; tz=0.0;
+	 for(j=b_m.res_be[i][0];j<b_m.res_be[i][1];j++)
+		{
+		 tx+=x[j];
+		 ty+=y[j];
+		 tz+=z[j];
+		 k++;
+		}
+	 cx[i]=tx/double(k);
+	 cy[i]=ty/double(k);
+	 cz[i]=tz/double(k);
+	}
+ for(i=0;i<resnum;i++)
+	{
+	 trm=0.0;
+	 for(j=b_m.res_be[i][0];j<b_m.res_be[i][1];j++)
+		{
+		 L_L_ab(cx[i],cy[i],cz[i],x[j],y[j],z[j],tr);
+		 if(tr>trm) trm=tr;
+		}
+	 mr[i]=sqrt(trm);
 	}
 }
 
@@ -140,6 +169,10 @@ int COOR_s::operator=(COOR_s &c2)
 	 C[i]=c2.C[i];
 	 CB[i]=c2.CB[i];
 	}
+ cx=c2.cx;
+ cy=c2.cy;
+ cz=c2.cz;
+ mr=c2.mr;
 }
 
 int Build_s::get_ss(Build_m m_c,Read_res r_r)
@@ -229,7 +262,7 @@ int Build_s::rt_fit(Build_m m_c)
  for(j=0;j<rtmn[i];j++)
 	{
 	 if(cs[i][j].atomn>0)
-	 fit_one(m_c,i,j);
+	 fit_one(m_c,i,j); 
 	}
 }
 
@@ -300,6 +333,23 @@ int Build_s::fit_one(Build_m m_c,int n1,int n2)
 	}
 }
 
+int Build_s::get_ct(int n1,int n2)
+{
+ int i;
+ double tx,ty,tz;
+
+ tx=0.0; ty=0.0; tz=0.0;
+ for(i=0;i<cs[n1][n2].atomn;i++)
+	{
+	 tx+=cs[n1][n2].x[i];
+	 ty+=cs[n1][n2].y[i];
+	 tz+=cs[n1][n2].z[i];
+	}
+ cs[n1][n2].cx=tx/double(cs[n1][n2].atomn);
+ cs[n1][n2].cy=ty/double(cs[n1][n2].atomn);
+ cs[n1][n2].cz=tz/double(cs[n1][n2].atomn);
+}
+
 int Build_s::build(Build_m m_c,Read_res r_r,Res_rtm rt)
 {
  get_ss(m_c,r_r);
@@ -311,6 +361,8 @@ int Cpy_s::init_cs(Build_s &b_s)
 {
  int i,n;
  n=b_s.resnum;
+ for(i=0;i<n;i++)
+	ipk=0;
  cs=new COOR_s[n];
  for(i=0;i<n;i++)
 	{

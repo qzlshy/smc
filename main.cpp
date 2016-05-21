@@ -42,5 +42,8 @@ int main(int argc,char **argv)
  cy_s=new Cpy_s[m];
  for(i=0;i<m;i++)
         cy_s[i].init_cs(b_s);
+
+ Caldist cdt;
+ cdt.init(b_m,b_s);
 }
 

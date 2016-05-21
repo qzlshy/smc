@@ -5,5 +5,6 @@
 #include "readprm.h"
 #include "build.h"
 #include "readconf.h"
+#include "caldist.h"
 
 using namespace std;
