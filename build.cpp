@@ -175,6 +175,31 @@ int COOR_s::operator=(COOR_s &c2)
  mr=c2.mr;
 }
 
+int COOR_s::getc()
+{
+ int i;
+ double tx,ty,tz,tr,trm;
+
+ tx=0.0; ty=0.0; tz=0.0;
+ for(i=0;i<atomn;i++)
+	{
+	 tx+=x[i];
+	 ty+=y[i];
+	 tz+=z[i];
+	}
+ cx=tx/double(atomn);
+ cy=ty/double(atomn);
+ cz=tz/double(atomn);
+
+ trm=0.0;
+ for(i=0;i<atomn;i++)
+	{
+	 L_L_ab(cx,cy,cz,x[i],y[i],z[i],tr);
+	 if(tr>trm) trm=tr;
+	}
+ mr=sqrt(trm);
+}
+
 int Build_s::get_ss(Build_m m_c,Read_res r_r)
 {
  int i,j,k,l;
@@ -262,7 +287,8 @@ int Build_s::rt_fit(Build_m m_c)
  for(j=0;j<rtmn[i];j++)
 	{
 	 if(cs[i][j].atomn>0)
-	 fit_one(m_c,i,j); 
+	 fit_one(m_c,i,j);
+	 get_ct(i,j);
 	}
 }
 
@@ -336,7 +362,7 @@ int Build_s::fit_one(Build_m m_c,int n1,int n2)
 int Build_s::get_ct(int n1,int n2)
 {
  int i;
- double tx,ty,tz;
+ double tx,ty,tz,tr,trm;
 
  tx=0.0; ty=0.0; tz=0.0;
  for(i=0;i<cs[n1][n2].atomn;i++)
@@ -348,6 +374,15 @@ int Build_s::get_ct(int n1,int n2)
  cs[n1][n2].cx=tx/double(cs[n1][n2].atomn);
  cs[n1][n2].cy=ty/double(cs[n1][n2].atomn);
  cs[n1][n2].cz=tz/double(cs[n1][n2].atomn);
+
+ trm=0.0;
+ for(i=0;i<cs[n1][n2].atomn;i++)
+	{
+	 L_L_ab(cs[n1][n2].cx,cs[n1][n2].cy,cs[n1][n2].cz,cs[n1][n2].x[i],cs[n1][n2].y[i],cs[n1][n2].z[i],tr);
+	 if(tr>trm) trm=tr;
+	}
+ cs[n1][n2].mr=sqrt(trm);
+ 
 }
 
 int Build_s::build(Build_m m_c,Read_res r_r,Res_rtm rt)

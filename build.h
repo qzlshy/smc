@@ -29,6 +29,7 @@ struct COOR_m
 	{
 	 public:
 	 int init_cm(Build_m &);
+	 int getc();
 	 int atomn,resnum;
 	 double *x,*y,*z;
 	 double **N,**CA,**C,**CB;
@@ -40,6 +41,7 @@ class COOR_s
 	 public:
 	 int atomn;
 	 int operator=(COOR_s &);
+	 int getc();
 	 double *x,*y,*z;
 	 double *N,*CA,*C,*CB;
 	 double cx,cy,cz,mr;
