@@ -31,6 +31,7 @@ struct COOR_m
 	 int init_cm(Build_m &);
 	 int getc();
 	 int atomn,resnum;
+	 int **res_be;
 	 double *x,*y,*z;
 	 double **N,**CA,**C,**CB;
 	 double *cx,*cy,*cz,*mr;

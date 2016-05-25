@@ -112,6 +112,11 @@ int COOR_m::init_cm(Build_m &b_m)
  cy=new double[resnum];
  cz=new double[resnum];
  mr=new double[resnum];
+
+ res_be=new int*[resnum];
+ for(i=0;i<resnum;i++)
+	res_be[i]=new int[2];
+
  for(i=0;i<atomn;i++)
 	{
 	 x[i]=b_m.x[i];
@@ -129,6 +134,8 @@ int COOR_m::init_cm(Build_m &b_m)
  for(i=0;i<resnum;i++)
 	{k=0;
 	 tx=0.0; ty=0.0; tz=0.0;
+	 res_be[i][0]=b_m.res_be[i][0];
+	 res_be[i][1]=b_m.res_be[i][1];
 	 for(j=b_m.res_be[i][0];j<b_m.res_be[i][1];j++)
 		{
 		 tx+=x[j];
@@ -144,6 +151,37 @@ int COOR_m::init_cm(Build_m &b_m)
 	{
 	 trm=0.0;
 	 for(j=b_m.res_be[i][0];j<b_m.res_be[i][1];j++)
+		{
+		 L_L_ab(cx[i],cy[i],cz[i],x[j],y[j],z[j],tr);
+		 if(tr>trm) trm=tr;
+		}
+	 mr[i]=sqrt(trm);
+	}
+}
+
+int COOR_m::getc()
+{
+ int i,j,k;
+ double tx,ty,tz,tr,trm;
+ 
+ for(i=0;i<resnum;i++)
+	{k=0;
+	 tx=0.0; ty=0.0; tz=0.0;
+	 for(j=res_be[i][0];j<res_be[i][1];j++)
+		{
+		 tx+=x[j];
+		 ty+=y[j];
+		 tz+=z[j];
+		 k++;
+		}
+	 cx[i]=tx/double(k);
+	 cy[i]=ty/double(k);
+	 cz[i]=tz/double(k);
+	}
+ for(i=0;i<resnum;i++)
+	{
+	 trm=0.0;
+	 for(j=res_be[i][0];j<res_be[i][1];j++)
 		{
 		 L_L_ab(cx[i],cy[i],cz[i],x[j],y[j],z[j],tr);
 		 if(tr>trm) trm=tr;
