@@ -45,6 +45,33 @@ int Caldist::inits(Build_s &b_s)
 
 int Caldist::init(Build_m &b_m,Build_s &b_s)
 {
+ int i,j;
  initm(b_m);
  inits(b_s);
+ goodn=new int[b_s.resnum];
+ good=new int*[b_s.resnum];
+ for(i=0;i<b_s.resnum;i++)
+	good[i]=new int[b_s.rtmn[i]];
+ 
+}
+
+int Caldist::cal(COOR_m &c_m,Cpy_s &cy_s,Rtm_tmp &r_t,int n)
+{
+ int i,k,t;
+ k=0;
+ for(i=0;i<rtmn[n];i++)
+	{
+	 t=caleach(c_m,cy_s,r_t.cs[n][i]);
+	 if(t==1)
+		{
+		 good[n][k]=i;
+		 k++;
+		}
+	}
+ goodn[n]=k;
+}
+
+int Caldist::caleach(COOR_m &c_m,Cpy_s &cy_s,COOR_s &cs)
+{
+ 
 }

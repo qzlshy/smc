@@ -190,6 +190,19 @@ int COOR_m::getc()
 	}
 }
 
+int COOR_s::init(int n)
+{
+ int i;
+ atomn=n;
+ x=new double[atomn];
+ y=new double[atomn];
+ z=new double[atomn];
+ N=new double[3];
+ CA=new double[3];
+ C=new double[3];
+ CB=new double[3];
+}
+
 int COOR_s::operator=(COOR_s &c2)
 {
  int i;
@@ -434,8 +447,9 @@ int Cpy_s::init_cs(Build_s &b_s)
 {
  int i,n;
  n=b_s.resnum;
+ ipk=new int[n];
  for(i=0;i<n;i++)
-	ipk=0;
+	ipk[i]=0;
  cs=new COOR_s[n];
  for(i=0;i<n;i++)
 	{
@@ -447,5 +461,45 @@ int Cpy_s::init_cs(Build_s &b_s)
 	 cs[i].CA=new double[3];
 	 cs[i].C=new double[3];
 	 cs[i].CB=new double[3];
+	}
+}
+
+int Rtm_tmp::init(Build_s &b_s)
+{
+ int i,j;
+ resnum=b_s.resnum;
+ rtmn=new int[resnum];
+ for(i=0;i<resnum;i++)
+	rtmn[i]=b_s.rtmn[i];
+
+ cs=new COOR_s*[resnum];
+ for(i=0;i<resnum;i++)
+	cs[i]=new COOR_s[rtmn[i]];
+
+ for(i=0;i<resnum;i++)
+ for(j=0;j<rtmn[i];j++)
+	{
+	 cs[i][j].init(b_s.cs[i][j].atomn);
+	 cs[i][j]=b_s.cs[i][j];
+	}
+
+}
+
+int Rtm_tmp::copy(Build_s &b_s)
+{
+ int i,j;
+ for(i=0;i<resnum;i++)
+ for(j=0;j<rtmn[i];j++)
+	{
+	 cs[i][j]=b_s.cs[i][j];
+	}
+}
+
+int Rtm_tmp::copy(Build_s &b_s,int n)
+{
+ int i;
+ for(i=0;i<rtmn[n];i++)
+	{
+	 cs[n][i]=b_s.cs[n][i];
 	}
 }

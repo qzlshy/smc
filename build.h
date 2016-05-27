@@ -41,6 +41,7 @@ class COOR_s
 	{
 	 public:
 	 int atomn;
+	 int init(int);
 	 int operator=(COOR_s &);
 	 int getc();
 	 double *x,*y,*z;
@@ -79,7 +80,18 @@ class Cpy_s
 	{
 	 public:
 	 int resnum;
-	 int ipk;
+	 int *ipk;
 	 COOR_s *cs;
 	 int init_cs(Build_s &);
+	};
+
+class Rtm_tmp
+	{
+	 public:
+	 int init(Build_s &);
+	 int copy(Build_s &,int);
+	 int copy(Build_s &);
+	 int resnum;
+	 int *rtmn;
+	 COOR_s **cs;
 	};

@@ -43,7 +43,24 @@ int main(int argc,char **argv)
  for(i=0;i<m;i++)
         cy_s[i].init_cs(b_s);
 
+ Rtm_tmp rt_t;
+ rt_t.init(b_s);
+
  Caldist cdt;
  cdt.init(b_m,b_s);
+
+//now calculate
+
+ srand(unsigned(time(0)));
+ double rd;
+
+ for(i=0;i<resnum;i++)
+	{
+	 for(j=0;j<m;j++)
+		{
+		 
+		}
+	}
+
 }
 
