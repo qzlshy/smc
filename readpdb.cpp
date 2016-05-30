@@ -88,7 +88,7 @@ int Read_pdb::readpdb(ifstream *pdbfile)
          stream.clear();
          stream.str(tmps);
          stream>>tof[n];
-	 if(l.size()<76) continue;
+	 if(l.size()<72) continue;
 	 tmps=l.substr(72,4);
 	 stream.clear();
 	 stream.str(tmps);

@@ -32,6 +32,7 @@ struct COOR_m
 	 int getc();
 	 int atomn,resnum;
 	 int **res_be;
+	 string *atomt;
 	 double *x,*y,*z;
 	 double **N,**CA,**C,**CB;
 	 double *cx,*cy,*cz,*mr;
@@ -79,10 +80,11 @@ class Build_s
 class Cpy_s
 	{
 	 public:
+	 int init_cs(Build_s &);
+	 int operator=(Cpy_s &);
 	 int resnum;
 	 int *ipk;
 	 COOR_s *cs;
-	 int init_cs(Build_s &);
 	};
 
 class Rtm_tmp

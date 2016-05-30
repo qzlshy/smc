@@ -97,6 +97,7 @@ int COOR_m::init_cm(Build_m &b_m)
  x=new double[atomn];
  y=new double[atomn];
  z=new double[atomn];
+ atomt=new string[atomn];
  N=new double*[resnum];
  CA=new double*[resnum];
  C=new double*[resnum];
@@ -122,6 +123,7 @@ int COOR_m::init_cm(Build_m &b_m)
 	 x[i]=b_m.x[i];
 	 y[i]=b_m.y[i];
 	 z[i]=b_m.z[i];
+	 atomt[i]=b_m.atomt[i];
 	}
  for(i=0;i<resnum;i++)
  for(j=0;j<3;j++)
@@ -461,6 +463,17 @@ int Cpy_s::init_cs(Build_s &b_s)
 	 cs[i].CA=new double[3];
 	 cs[i].C=new double[3];
 	 cs[i].CB=new double[3];
+	}
+}
+
+int Cpy_s::operator=(Cpy_s &cy_s)
+{
+ int i;
+ for(i=0;i<resnum;i++)
+	{
+	 ipk[i]=cy_s.ipk[i];
+	 if(ipk[i]==1)
+		cs[i]=cy_s.cs[i];
 	}
 }
 

@@ -23,10 +23,12 @@ class Caldist
 	 int inits(Build_s &);
 	 int init(Build_m &,Build_s &);
 	 int cal(COOR_m &,Cpy_s &,Rtm_tmp &,int);
-	 int caleach(COOR_m &,Cpy_s &,COOR_s &);
+	 int caleach(COOR_m &,Cpy_s &,COOR_s &,int);
+	 int getw(double);
 	 int resnum;
 	 int *goodn;
 	 int **good;
+	 double w,maxr;
 	 VDW_r vm;
 	 VDW_r *vs;
 	};
