@@ -75,6 +75,20 @@ int Caldist::cal(COOR_m &c_m,Cpy_s &cy_s,Rtm_tmp &r_t,int n)
  goodn[n]=k;
 }
 
+int Caldist::cal2(COOR_m &c_m,Cpy_s &cy_s,Rtm_tmp &r_t,int n)
+{
+ int i,k,t;
+ k=0;
+ for(i=0;i<r_t.rtmn[n];i++)
+        {
+         t=caleach(c_m,cy_s,r_t.cs[n][i],n);
+	 good[n][k]=t;
+	 if(t==1)
+		k++;
+        }
+ goodn[n]=k;
+}
+
 
 int Caldist::getw(double a)
 {
@@ -114,7 +128,7 @@ int Caldist::caleach(COOR_m &c_m,Cpy_s &cy_s,COOR_s &cs,int n)
 	}
 
  for(i=0;i<resnum;i++)
- if(cy_s.ipk[i]==1)
+ if(cy_s.ipk[i]==1&&i!=n)
 	{
 	 cut1=maxr*w+maxr*w+cy_s.cs[i].mr+cs.mr;
 	 cut1*=cut1;

@@ -88,11 +88,13 @@ int Read_pdb::readpdb(ifstream *pdbfile)
          stream.clear();
          stream.str(tmps);
          stream>>tof[n];
-	 if(l.size()<72) continue;
-	 tmps=l.substr(72,4);
-	 stream.clear();
-	 stream.str(tmps);
-	 stream>>segid[n];
+	 if(l.size()>=76);
+		{
+		 tmps=l.substr(72,4);
+		 stream.clear();
+		 stream.str(tmps);
+		 stream>>segid[n];
+		}
          index[n]=n;
          n++; }
         }
@@ -469,7 +471,7 @@ int Main_chain::get_mc(ifstream *fp1)
 
  for(i=0;i<resnum;i++)
 	{
-	 if(res_t[i]=="HIS")
+	 if(res_t[i]=="HIS"||res_t[i]=="HSE"||res_t[i]=="HSP")
 		res_t[i]="HSD";
 	}
 
@@ -611,7 +613,7 @@ int Main_chain::get_mc(ifstream *fp1,int useh)
 	}
  for(i=0;i<resnum;i++)
 	{
-	 if(res_t[i]=="HIS")
+	 if(res_t[i]=="HIS"||res_t[i]=="HSE"||res_t[i]=="HSP")
 		res_t[i]="HSD";
 	}
 

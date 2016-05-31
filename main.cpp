@@ -60,7 +60,7 @@ int main(int argc,char **argv)
  double rd,*w,wt,result;
  w=new double[m];
  for(i=0;i<m;i++)
-	w[i]=1.0;
+	w[i]=0.0;
  rs=new int[m];
  rm=new int[m];
 
@@ -70,14 +70,14 @@ int main(int argc,char **argv)
 		{
 		 cdt.cal(c_m[j],cy_s[j],rt_t,i);
 		 t1=cdt.goodn[i];
-		 w[j]*=double(t1);
-		 if(w[j]==0)
-			{
+		 if(t1==0)
+			{w[j]=0.0;
 			 rm[rmn]=j;
 			 rmn++;
 			}
 		 else
 			{
+			 w[j]+=log(double(t1));
 			 rdi=rand()%t1;
 			 t2=cdt.good[i][rdi];
 			 cy_s[j].cs[i]=rt_t.cs[i][t2];
@@ -97,17 +97,117 @@ int main(int argc,char **argv)
 		 t2=rs[t1];
 		 t3=rm[j];
 		 cy_s[t3]=cy_s[t2];
-		 w[t2]/=2.0;
+		 w[t2]-=log(2.0);
 		 w[t3]=w[t2];
 		}
 	}
  wt=0.0;
  for(i=0;i<m;i++)
 	wt+=w[i];
- result=log(wt/double(m));
+ result=wt/double(m);
+ cout<<result<<'\n';
+
+//M
+
+ int rdi2;
+ for(i=0;i<m;i++)
+	w[i]=0.0;
+
+ for(i=0;i<resnum;i++)
+	{rsn=0; rmn=0;
+	 for(j=0;j<m;j++)
+		{rdi=rand()%resnum;
+		 cdt.cal(c_m[j],cy_s[j],rt_t,rdi);
+		 t1=cdt.goodn[rdi];
+		 if(t1==0)
+			{w[j]==0;
+			 rm[rmn]=j;
+			 rmn++;
+			}
+		 else
+			{
+			 w[j]+=log(double(t1));
+			 rdi2=rand()%t1;
+			 t2=cdt.good[rdi][rdi2];
+			 cy_s[j].cs[rdi]=rt_t.cs[rdi][t2];
+			 cy_s[j].ipk[rdi]=1;
+			 rs[rsn]=j;
+			 rsn++;
+			}
+		}
+	 if(rsn==0)
+		{
+		 cout<<"Not well!!!\n";
+		 exit(0);
+		}
+	 for(j=0;j<rmn;j++)
+		{
+		 t1=rand()%rsn;
+		 t2=rs[t1];
+		 t3=rm[j];
+		 cy_s[t3]=cy_s[t2];
+		 w[t2]-=log(2.0);
+		 w[t3]=w[t2];
+		}
+	}
+
+
+ wt=0.0;
+ for(i=0;i<m;i++)
+	{
+	 wt+=w[i];
+	}
+ result=wt/double(m);
  cout<<result<<'\n';
 
  
+ for(i=0;i<m;i++)
+	w[i]=0.0;
+
+ for(i=0;i<resnum;i++)
+	{rsn=0; rmn=0;
+	 for(j=0;j<m;j++)
+		{
+		 cdt.cal(c_m[j],cy_s[j],rt_t,i);
+		 t1=cdt.goodn[i];
+		 if(t1==0)
+			{w[j]==0;
+			 rm[rmn]=j;
+			 rmn++;
+			}
+		 else
+			{
+			 w[j]+=log(double(t1));
+			 rdi=rand()%t1;
+			 t2=cdt.good[i][rdi];
+			 cy_s[j].cs[i]=rt_t.cs[i][t2];
+			 cy_s[j].ipk[i]=1;
+			 rs[rsn]=j;
+			 rsn++;
+			}
+		}
+	 if(rsn==0)
+		{
+		 cout<<"Not well!!!\n";
+		 exit(0);
+		}
+	 for(j=0;j<rmn;j++)
+		{
+		 t1=rand()%rsn;
+		 t2=rs[t1];
+		 t3=rm[j];
+		 cy_s[t3]=cy_s[t2];
+		 w[t2]-=log(2.0);
+		 w[t3]=w[t2];
+		}
+	}
+ wt=0.0;
+ for(i=0;i<m;i++)
+        {
+         wt+=w[i];
+        }
+ result=wt/double(m);
+ cout<<result<<'\n';
  
 }
 

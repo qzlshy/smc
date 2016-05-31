@@ -23,6 +23,7 @@ class Caldist
 	 int inits(Build_s &);
 	 int init(Build_m &,Build_s &);
 	 int cal(COOR_m &,Cpy_s &,Rtm_tmp &,int);
+	 int cal2(COOR_m &,Cpy_s &,Rtm_tmp &,int);
 	 int caleach(COOR_m &,Cpy_s &,COOR_s &,int);
 	 int getw(double);
 	 int resnum;
