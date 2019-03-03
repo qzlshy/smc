@@ -9,8 +9,8 @@ Run<br/>
 ./long cal.conf<br/>
 <br/>
 cal.conf is the configuration file, defind the input files of the program. <br/>
- 1 |  1  
---|--
+ 1 | 1  
+-- | --
 rotamer ./usefile/rotamer.pdb            | #rotamer library   <br/>
 pdb ./ubq/ubq-1.pdb                      | #input protein structure, you can change to yourself file<br/>
 res ./usefile/res.txt                    | #defind side chain dihedral angle of 20 type residues  <br/>
