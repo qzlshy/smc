@@ -6,3 +6,7 @@ make clean<br/>
 make<br/>
 
 Run<br/>
+./long cal.conf<br/>
+<br/>
+cal.conf is the configuration file, defind the input files of the program. <br/>
+
