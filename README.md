@@ -9,7 +9,8 @@ Run<br/>
 ./long cal.conf<br/>
 <br/>
 cal.conf is the configuration file, defind the input files of the program. <br/>
- 1 | 1  
+
+ 表头 | 表头  
 -- | --
 rotamer ./usefile/rotamer.pdb            | #rotamer library  
 pdb ./ubq/ubq-1.pdb                      | #input protein structure, you can change to yourself file
