@@ -19,5 +19,5 @@ top ./usefile/top_all36_prot_lipid.rtf   | #Topology file
 prm ./usefile/par_all36_prot_lipid.prm   | #Force field file  
 copy 200                                 | #Copy number  
 
-The method used here is to refer to the paper: <br/>
+The method used here refers to the following literature: <br/>
 On Side-Chain Conformational Entropy of Proteins <br/>
