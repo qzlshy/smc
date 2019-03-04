@@ -106,7 +106,7 @@ int main(int argc,char **argv)
 	wt+=w[i];
  result=wt/double(m);
  cout<<result<<'\n';
-
+/*
 //M
 
  int rdi2;
@@ -208,6 +208,6 @@ int main(int argc,char **argv)
         }
  result=wt/double(m);
  cout<<result<<'\n';
- 
+*/ 
 }
 
